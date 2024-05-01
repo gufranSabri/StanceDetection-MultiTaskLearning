@@ -151,18 +151,24 @@ def sequential_trainer(
                 else:
                     best_valid_accs["sentiment"] = valid_sentiment_acc
                     patience = max_patience
-                    model_copy = copy.deepcopy(model)
-                    copy_acc = valid_stance_acc
+                    
+                    if valid_stance_acc > copy_acc:
+                        model_copy = copy.deepcopy(model)
+                        copy_acc = valid_stance_acc
             else:
                 best_valid_accs["sarcasm"] = valid_sarcasm_acc
                 patience = max_patience
-                model_copy = copy.deepcopy(model)
-                copy_acc = valid_stance_acc
+
+                if valid_stance_acc > copy_acc:
+                    model_copy = copy.deepcopy(model)
+                    copy_acc = valid_stance_acc
         else:
             best_valid_accs["stance"] = valid_stance_acc
             patience = max_patience
-            model_copy = copy.deepcopy(model)
-            copy_acc = valid_stance_acc
+
+            if valid_stance_acc > copy_acc:
+                model_copy = copy.deepcopy(model)
+                copy_acc = valid_stance_acc
         
         if patience == 0:
             print(f"\nEarly stopping triggered after {patience} epochs without improvement.\n")
@@ -309,18 +315,24 @@ def parallel_trainer(
                 else:
                     best_valid_accs["sentiment"] = valid_sentiment_acc
                     patience = max_patience
-                    model_copy = copy.deepcopy(model)
-                    copy_acc = valid_stance_acc
+                    
+                    if valid_stance_acc > copy_acc:
+                        model_copy = copy.deepcopy(model)
+                        copy_acc = valid_stance_acc
             else:
                 best_valid_accs["sarcasm"] = valid_sarcasm_acc
                 patience = max_patience
-                model_copy = copy.deepcopy(model)
-                copy_acc = valid_stance_acc
+
+                if valid_stance_acc > copy_acc:
+                    model_copy = copy.deepcopy(model)
+                    copy_acc = valid_stance_acc
         else:
             best_valid_accs["stance"] = valid_stance_acc
             patience = max_patience
-            model_copy = copy.deepcopy(model)
-            copy_acc = valid_stance_acc
+
+            if valid_stance_acc > copy_acc:
+                model_copy = copy.deepcopy(model)
+                copy_acc = valid_stance_acc
         
         if patience == 0:
             print(f"\nEarly stopping triggered after {patience} epochs without improvement.\n")

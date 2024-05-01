@@ -281,7 +281,7 @@ if __name__ == '__main__':
     parser.add_argument('-es',dest='ensemble_setting', default='0')
     parser.add_argument('-ws',dest='weighting_setting', default='0')
     parser.add_argument('-bert',dest='bert_models', default='0')
-    parser.add_argument('-pool',dest='pooling', default='0')
+    parser.add_argument('-pool',dest='pooling', default='1')
     parser.add_argument('-bi',dest='use_bi', default='0')
     parser.add_argument('-gru',dest='use_gru', default='0')
     parser.add_argument('-device',dest='device', default='cuda')
