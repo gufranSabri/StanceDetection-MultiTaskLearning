@@ -272,7 +272,7 @@ def main(args):
     
     ensm = list(ensemble_settings.keys())[list(ensemble_settings.values()).index(int(args.ensemble_setting))]
     wsm = list(weighting_settings.keys())[list(weighting_settings.values()).index(int(args.weighting_setting))]
-    torch.save(model.state_dict(), f"./models/{args.model}_fs.{args.first_task}_{ensm}_{wsm}_berts.{args.bert_models}_pool.{args.pooling}_bi.{args.use_bi}_gru.{args.use_gru}_stanceAcc{best_valid_stance_acc:.2f}.pt")
+    torch.save(model.state_dict(), f"./models/{args.model}_fs.{args.first_task}_{ensm}_{wsm}_berts.{args.bert_models}_pool.{args.pooling}_bi.{args.use_bi}_gru.{args.use_gru}_stanceAcc{best_valid_stance_acc:.4f}.pt")
         
 if __name__ == '__main__':
     parser=argparse.ArgumentParser()
