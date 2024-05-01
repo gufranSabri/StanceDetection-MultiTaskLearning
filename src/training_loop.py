@@ -171,7 +171,7 @@ def sequential_trainer(
                 copy_acc = valid_stance_acc
         
         if patience == 0:
-            print(f"\nEarly stopping triggered after {patience} epochs without improvement.\n")
+            print(f"\nEarly stopping triggered after {max_patience} epochs without improvement.\n")
             break
         
         lr_scheduler.step()
