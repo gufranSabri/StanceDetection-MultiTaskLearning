@@ -90,9 +90,9 @@ def sequential_trainer(
         sentiment_acc = correct_sentiment / total_samples
         stance_acc = correct_stance / total_samples
 
-        print(f"Sarcasm -> Loss: {avg_sarcasm_loss:.4f}, Acc: {sarcasm_acc:.4f}")
-        print(f"Sentiment -> Loss: {avg_sentiment_loss:.4f}, Acc: {sentiment_acc:.4f}")
-        print(f"Stance -> Loss: {avg_stance_loss:.4f}, Acc: {stance_acc:.4f}\n")
+        print(f"Sarcasm -> Loss: {avg_sarcasm_loss:.6f}, Acc: {sarcasm_acc:.6f}")
+        print(f"Sentiment -> Loss: {avg_sentiment_loss:.6f}, Acc: {sentiment_acc:.6f}")
+        print(f"Stance -> Loss: {avg_stance_loss:.6f}, Acc: {stance_acc:.6f}\n")
         
         
         # VALIDATION -------------------------------------------------------------------------------
@@ -140,9 +140,9 @@ def sequential_trainer(
         valid_sentiment_acc = valid_correct_sentiment / valid_total_samples
         valid_stance_acc = valid_correct_stance / valid_total_samples
 
-        print(f"Sarcasm -> Loss: {avg_valid_sarcasm_loss:.4f}, Acc: {valid_sarcasm_acc:.4f}")
-        print(f"Sentiment -> Loss: {avg_valid_sentiment_loss:.4f}, Acc: {valid_sentiment_acc:.4f}")
-        print(f"Stance -> Loss: {avg_valid_stance_loss:.4f}, Acc: {valid_stance_acc:.4f}\n\n")
+        print(f"Sarcasm -> Loss: {avg_valid_sarcasm_loss:.6f}, Acc: {valid_sarcasm_acc:.6f}")
+        print(f"Sentiment -> Loss: {avg_valid_sentiment_loss:.6f}, Acc: {valid_sentiment_acc:.6f}")
+        print(f"Stance -> Loss: {avg_valid_stance_loss:.6f}, Acc: {valid_stance_acc:.6f}\n\n")
 
         if valid_stance_acc < best_valid_accs["stance"]:
             if valid_sarcasm_acc < best_valid_accs["sarcasm"]:
@@ -254,9 +254,9 @@ def parallel_trainer(
         sentiment_acc = correct_sentiment / total_samples
         stance_acc = correct_stance / total_samples
 
-        print(f"Sarcasm -> Loss: {avg_sarcasm_loss:.4f}, Acc: {sarcasm_acc:.4f}")
-        print(f"Sentiment -> Loss: {avg_sentiment_loss:.4f}, Acc: {sentiment_acc:.4f}")
-        print(f"Stance -> Loss: {avg_stance_loss:.4f}, Acc: {stance_acc:.4f}\n")
+        print(f"Sarcasm -> Loss: {avg_sarcasm_loss:.6f}, Acc: {sarcasm_acc:.6f}")
+        print(f"Sentiment -> Loss: {avg_sentiment_loss:.6f}, Acc: {sentiment_acc:.6f}")
+        print(f"Stance -> Loss: {avg_stance_loss:.6f}, Acc: {stance_acc:.6f}\n")
         
         
         # VALIDATION -------------------------------------------------------------------------------
@@ -304,9 +304,9 @@ def parallel_trainer(
         valid_sentiment_acc = valid_correct_sentiment / valid_total_samples
         valid_stance_acc = valid_correct_stance / valid_total_samples
 
-        print(f"Sarcasm -> Loss: {avg_valid_sarcasm_loss:.4f}, Acc: {valid_sarcasm_acc:.4f}")
-        print(f"Sentiment -> Loss: {avg_valid_sentiment_loss:.4f}, Acc: {valid_sentiment_acc:.4f}")
-        print(f"Stance -> Loss: {avg_valid_stance_loss:.4f}, Acc: {valid_stance_acc:.4f}\n\n")
+        print(f"Sarcasm -> Loss: {avg_valid_sarcasm_loss:.6f}, Acc: {valid_sarcasm_acc:.6f}")
+        print(f"Sentiment -> Loss: {avg_valid_sentiment_loss:.6f}, Acc: {valid_sentiment_acc:.6f}")
+        print(f"Stance -> Loss: {avg_valid_stance_loss:.6f}, Acc: {valid_stance_acc:.6f}\n\n")
 
         if valid_stance_acc < best_valid_accs["stance"]:
             if valid_sarcasm_acc < best_valid_accs["sarcasm"]:
