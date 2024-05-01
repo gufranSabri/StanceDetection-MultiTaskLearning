@@ -3,6 +3,7 @@ from tqdm import tqdm
 import os
 import torch
 import warnings
+import copy
 from model import weighting_settings
 warnings.filterwarnings("ignore")
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -23,6 +24,8 @@ def sequential_trainer(
 
     best_valid_accs = {"stance": -float('inf'), "sarcasm": -float('inf'), "sentiment": -float('inf')}
     max_patience = patience
+    model_copy = copy.deepcopy(model)
+    copy_acc = None
     for epoch in range(num_epochs):
         print(f"Epoch [{epoch+1}/{num_epochs}] || Learning Rate: {lr_scheduler.get_lr()} || Patience: {patience}")
         
@@ -148,12 +151,18 @@ def sequential_trainer(
                 else:
                     best_valid_accs["sentiment"] = valid_sentiment_acc
                     patience = max_patience
+                    model_copy = copy.deepcopy(model)
+                    copy_acc = valid_stance_acc
             else:
                 best_valid_accs["sarcasm"] = valid_sarcasm_acc
                 patience = max_patience
+                model_copy = copy.deepcopy(model)
+                copy_acc = valid_stance_acc
         else:
             best_valid_accs["stance"] = valid_stance_acc
             patience = max_patience
+            model_copy = copy.deepcopy(model)
+            copy_acc = valid_stance_acc
         
         if patience == 0:
             print(f"\nEarly stopping triggered after {patience} epochs without improvement.\n")
@@ -161,7 +170,7 @@ def sequential_trainer(
         
         lr_scheduler.step()
 
-    return model, best_valid_accs["stance"]
+    return model_copy, copy_acc
 
 def parallel_trainer(
         train_loader, 
@@ -176,8 +185,10 @@ def parallel_trainer(
         device="cuda",
     ):
 
+    model_copy = copy.deepcopy(model)
     max_patience = patience
     best_valid_accs = {"stance": -float('inf'), "sarcasm": -float('inf'), "sentiment": -float('inf')}
+    copy_acc = None
     for epoch in range(num_epochs):
         print(f"Epoch [{epoch+1}/{num_epochs}] || Learning Rate: {lr_scheduler.get_lr()} || Patience: {patience}")
         
@@ -298,17 +309,23 @@ def parallel_trainer(
                 else:
                     best_valid_accs["sentiment"] = valid_sentiment_acc
                     patience = max_patience
+                    model_copy = copy.deepcopy(model)
+                    copy_acc = valid_stance_acc
             else:
                 best_valid_accs["sarcasm"] = valid_sarcasm_acc
                 patience = max_patience
+                model_copy = copy.deepcopy(model)
+                copy_acc = valid_stance_acc
         else:
             best_valid_accs["stance"] = valid_stance_acc
             patience = max_patience
+            model_copy = copy.deepcopy(model)
+            copy_acc = valid_stance_acc
         
         if patience == 0:
             print(f"\nEarly stopping triggered after {patience} epochs without improvement.\n")
             break
         
         lr_scheduler.step()
-    
-    return model, best_valid_accs["stance"]
+
+    return model_copy, copy_acc
