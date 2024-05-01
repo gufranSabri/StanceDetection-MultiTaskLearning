@@ -34,4 +34,4 @@ This `main.py` script provides a command-line interface with the following argum
 
 Example usage:
 
-``` python script_name.py -model sequential -first sentiment -es 2 -ws 4 -bert 0123 -pool 1 -bi 1 -gru 0 -device cuda ```
+``` python src/main.py -model sequential -first sentiment -es 2 -ws 4 -bert 0123 -pool 1 -bi 1 -gru 0 -device cuda ```
