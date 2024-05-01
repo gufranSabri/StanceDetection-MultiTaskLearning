@@ -25,7 +25,7 @@ def sequential_trainer(
     best_valid_accs = {"stance": -float('inf'), "sarcasm": -float('inf'), "sentiment": -float('inf')}
     max_patience = patience
     model_copy = copy.deepcopy(model)
-    copy_acc = None
+    copy_acc = -float('inf')
     for epoch in range(num_epochs):
         print(f"Epoch [{epoch+1}/{num_epochs}] || Learning Rate: {lr_scheduler.get_lr()} || Patience: {patience}")
         
@@ -194,7 +194,7 @@ def parallel_trainer(
     model_copy = copy.deepcopy(model)
     max_patience = patience
     best_valid_accs = {"stance": -float('inf'), "sarcasm": -float('inf'), "sentiment": -float('inf')}
-    copy_acc = None
+    copy_acc = -float('inf')
     for epoch in range(num_epochs):
         print(f"Epoch [{epoch+1}/{num_epochs}] || Learning Rate: {lr_scheduler.get_lr()} || Patience: {patience}")
         
