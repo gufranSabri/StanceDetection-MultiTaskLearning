@@ -77,7 +77,7 @@ def main(args):
     task_head_layer_size = 256
     BERT_hidden_state_size = 768
     batch_size = 4
-    num_epochs = 1
+    num_epochs = 20
     learning_rate = 2e-5
     weight_decay = 1e-5
     dropout = 0.1
