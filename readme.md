@@ -19,9 +19,6 @@ This `main.py` script provides a command-line interface with the following argum
   - 1: STATIC_WEIGHTING
   - 2: RELATIVE_WEIGHTING
   - 3: HEIRARCHICAL_WEIGHTING
-  - 4: PRIORITIZE_HIGH_CONFIDENCE_WEIGHTING
-  - 5: PRIORITIZE_LOW_CONFIDENCE_WEIGHTING
-  - 6: META_WEIGHTING
 - `-bert`: Provide a list of indices (0, 1, 2, and/or 3) for BERT models. Example, you can provide multiple bert models: 013
   - 0: "aubmindlab/bert-base-arabertv02-twitter"
   - 1: "aubmindlab/bert-base-arabertv02"
