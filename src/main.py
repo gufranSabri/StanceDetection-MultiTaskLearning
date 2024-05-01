@@ -239,7 +239,7 @@ def main(args):
     print("Weighting Method:", list(weighting_settings.keys())[list(weighting_settings.values()).index(int(args.weighting_setting))])
     print("Pool BERT Output:", bool(int(args.pooling)))
     print("Use Bi:", bool(int(args.use_bi)))
-    print("Use GRU:", bool(int(args.use_bi)))
+    print("Use GRU:", bool(int(args.use_gru)))
     print("------------------------------------\n")
 
     best_valid_stance_acc = None
