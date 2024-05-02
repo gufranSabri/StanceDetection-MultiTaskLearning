@@ -157,7 +157,11 @@ def main(args):
     num_sentiment_labels = len(df.sentiment.unique())
     num_stance_labels = len(df.stance.unique())
 
-    num_sarcasm_labels, num_sentiment_labels, num_stance_labels
+    print("NUM LABELS")
+    print("Sarcasm:", num_sarcasm_labels)
+    print("Sentiment:", num_sentiment_labels)
+    print("Stance:", num_stance_labels)
+    print("------------------------------------\n")
 
     model = None
     print("\nINITIALIZING MODEL")
