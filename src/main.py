@@ -207,7 +207,7 @@ def main(args):
                 use_gru=bool(int(args.use_gru)),
             ),
             SequentialTaskHead(
-                num_sentiment_labels if args.first_task == "sarcasm" else num_sarcasm_labels, 
+                num_sarcasm_labels if args.first_task == "sarcasm" else num_sentiment_labels, 
                 BERT_hidden_state_size,
                 task_name="sarcasm" if args.first_task == "sentiment" else "sentiment",
                 pool_bert_output=bool(int(args.pooling)),
