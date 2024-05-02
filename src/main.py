@@ -107,6 +107,16 @@ def main(args):
     y = df[["sarcasm", "sentiment", "stance"]]
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.15, random_state=42)
+    
+
+    if bool(int(args.drop_low_confidence)):
+        print("DROPPING LOW CONFIDENCE SAMPLES")
+        X_train = X_train[(X_train["sarcasm:confidence"] > 0.5) & (X_train["sentiment:confidence"] > 0.5)]
+        y_train = y_train.loc[X_train.index]
+
+        X_train = X_train.reset_index(drop=True)
+        y_train = y_train.reset_index(drop=True)
+    
     print("X_train shape:", X_train.shape, "y_train shape:", y_train.shape, "X_test shape:", X_test.shape, "y_test shape:", y_test.shape)
 
     encoded_tweets_train = []
@@ -284,6 +294,7 @@ if __name__ == '__main__':
     parser.add_argument('-pool',dest='pooling', default='1')
     parser.add_argument('-bi',dest='use_bi', default='0')
     parser.add_argument('-gru',dest='use_gru', default='0')
+    parser.add_argument('-dlc',dest='drop_low_confidence', default='0')
     parser.add_argument('-device',dest='device', default='cuda')
     args=parser.parse_args()
 
