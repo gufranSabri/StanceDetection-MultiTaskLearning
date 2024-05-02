@@ -117,7 +117,11 @@ def sequential_trainer(
                 sent_y = sent_y.to(device)
                 stance_y = stance_y.to(device)
 
-                sarcasm_logits, sentiment_logits, stance_logits = model(input_ids, attention_mask)
+                sarcasm_logits, sentiment_logits, stance_logits = None, None, None
+                if first_task == "sarcasm":
+                    sarcasm_logits, sentiment_logits, stance_logits = model(input_ids, attention_mask)
+                else:
+                    sentiment_logits, sarcasm_logits, stance_logits = model(input_ids, attention_mask)
 
                 sarcasm_loss = ce_loss(sarcasm_logits, sarc_y)
                 sentiment_loss = ce_loss(sentiment_logits, sent_y)
