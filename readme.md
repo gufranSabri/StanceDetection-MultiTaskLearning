@@ -27,6 +27,7 @@ This `main.py` script provides a command-line interface with the following argum
 - `-pool`: Choose between 0 or 1 for pooling. This variable decides whether the BERT output is pooled or not; whether we will use LSTM or not. 1 implies that LSTM will not be used. Default is 1.
 - `-bi`: Set to 0 or 1 to enable or disable bidirectional processing. Default is 0 (disabled).
 - `-gru`: Set to 0 or 1 to enable or disable GRU usage. 1 implies that GRU wlll be used instead of LSTM. Default is 0 (disabled).
+- `-dlc`: Drop low confidence rows for sarcasm and sentiment from training data. Default is 0, ie, they will not be dropped.
 - `-device`: Choose between 'cuda' or 'mps' for the computing device. Default is 'cuda'.
 
 Example usage:
