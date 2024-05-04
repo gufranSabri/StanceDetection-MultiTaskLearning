@@ -261,31 +261,20 @@ def main(args):
     best_valid_stance_acc = None
     if args.model == 'parallel':
         print("TRAINING PARALLEL MTL MODEL")
-        model, best_valid_stance_acc = parallel_trainer(
-            train_loader, 
-            val_loader, 
-            model, 
-            optimizer, 
-            lr_scheduler, 
-            ce_loss,
-            num_epochs, 
-            WEIGHTING_METHOD=int(args.weighting_setting), 
-            device = args.device
-        )
     else:
         print("TRAINING SEQUENTIAL MTL MODEL")
-        model, best_valid_stance_acc = sequential_trainer(
-            train_loader, 
-            val_loader, 
-            model, 
-            optimizer, 
-            lr_scheduler, 
-            ce_loss,
-            num_epochs, 
-            first_task=args.first_task,
-            WEIGHTING_METHOD=int(args.weighting_setting), 
-            device = args.device
-        )
+
+    model, best_valid_stance_acc = trainer(
+        train_loader, 
+        val_loader, 
+        model, 
+        optimizer, 
+        lr_scheduler, 
+        ce_loss,
+        num_epochs, 
+        WEIGHTING_METHOD=int(args.weighting_setting), 
+        device = args.device
+    )
     
     ensm = list(ensemble_settings.keys())[list(ensemble_settings.values()).index(int(args.ensemble_setting))]
     wsm = list(weighting_settings.keys())[list(weighting_settings.values()).index(int(args.weighting_setting))]
