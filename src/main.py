@@ -199,8 +199,7 @@ def main(args):
             device=args.device
         ).to(args.device)
     else:
-        model = SequentialMultiTaskModel(
-            bert_models,
+        first_two_heads = [
             SequentialTaskHead(
                 num_sentiment_labels if args.first_task == "sentiment" else num_sarcasm_labels, 
                 BERT_hidden_state_size,
@@ -218,6 +217,32 @@ def main(args):
                 use_bi=bool(int(args.use_bi)),
                 use_gru=bool(int(args.use_gru)),
             ),
+        ]
+
+        if args.first_task == "sarcasm":
+            first_two_heads = [
+                SequentialTaskHead(
+                    num_sarcasm_labels if args.first_task == "sarcasm" else num_sentiment_labels, 
+                    BERT_hidden_state_size,
+                    task_name="sarcasm" if args.first_task == "sentiment" else "sentiment",
+                    pool_bert_output=bool(int(args.pooling)),
+                    use_bi=bool(int(args.use_bi)),
+                    use_gru=bool(int(args.use_gru)),
+                ),
+                SequentialTaskHead(
+                    num_sentiment_labels if args.first_task == "sentiment" else num_sarcasm_labels, 
+                    BERT_hidden_state_size,
+                    task_name=args.first_task,
+                    is_first_head=True,
+                    pool_bert_output=bool(int(args.pooling)),
+                    use_bi=bool(int(args.use_bi)),
+                    use_gru=bool(int(args.use_gru)),
+                ),
+            ]
+        
+        model = SequentialMultiTaskModel(
+            bert_models,
+            *first_two_heads,
             SequentialTaskHead(
                 num_stance_labels,
                 BERT_hidden_state_size,
@@ -230,6 +255,7 @@ def main(args):
             combination_method=int(args.ensemble_setting),
             weighting_method=int(args.weighting_setting),
             pool_bert_output=bool(int(args.pooling)),
+            first_task=args.first_task,
             device=args.device
         ).to(args.device)
     print("------------------------------------\n")
@@ -280,6 +306,7 @@ def main(args):
             lr_scheduler, 
             ce_loss,
             num_epochs, 
+            first_task=args.first_task,
             WEIGHTING_METHOD=int(args.weighting_setting), 
             device = args.device
         )
