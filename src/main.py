@@ -198,51 +198,27 @@ def main(args):
             pool_bert_output=bool(int(args.pooling)),
             device=args.device
         ).to(args.device)
-    else:
-        first_two_heads = [
-            SequentialTaskHead(
-                num_sentiment_labels if args.first_task == "sentiment" else num_sarcasm_labels, 
-                BERT_hidden_state_size,
-                task_name=args.first_task,
-                is_first_head=True,
-                pool_bert_output=bool(int(args.pooling)),
-                use_bi=bool(int(args.use_bi)),
-                use_gru=bool(int(args.use_gru)),
-            ),
-            SequentialTaskHead(
-                num_sarcasm_labels if args.first_task == "sarcasm" else num_sentiment_labels, 
-                BERT_hidden_state_size,
-                task_name="sarcasm" if args.first_task == "sentiment" else "sentiment",
-                pool_bert_output=bool(int(args.pooling)),
-                use_bi=bool(int(args.use_bi)),
-                use_gru=bool(int(args.use_gru)),
-            ),
-        ]
-
-        if args.first_task == "sarcasm":
-            first_two_heads = [
-                SequentialTaskHead(
-                    num_sarcasm_labels if args.first_task == "sarcasm" else num_sentiment_labels, 
-                    BERT_hidden_state_size,
-                    task_name="sarcasm" if args.first_task == "sentiment" else "sentiment",
-                    pool_bert_output=bool(int(args.pooling)),
-                    use_bi=bool(int(args.use_bi)),
-                    use_gru=bool(int(args.use_gru)),
-                ),
-                SequentialTaskHead(
-                    num_sentiment_labels if args.first_task == "sentiment" else num_sarcasm_labels, 
-                    BERT_hidden_state_size,
-                    task_name=args.first_task,
-                    is_first_head=True,
-                    pool_bert_output=bool(int(args.pooling)),
-                    use_bi=bool(int(args.use_bi)),
-                    use_gru=bool(int(args.use_gru)),
-                ),
-            ]
-        
+    else:       
         model = SequentialMultiTaskModel(
             bert_models,
-            *first_two_heads,
+            SequentialTaskHead(
+                num_sentiment_labels,
+                BERT_hidden_state_size,
+                task_name="sentiment",
+                is_first_head = args.first_task == "sentiment",
+                pool_bert_output=bool(int(args.pooling)),
+                use_bi=bool(int(args.use_bi)),
+                use_gru=bool(int(args.use_gru)),
+            ),
+            SequentialTaskHead(
+                num_sarcasm_labels, 
+                BERT_hidden_state_size,
+                task_name="sarcasm",
+                is_first_head = args.first_task == "sarcasm",
+                pool_bert_output=bool(int(args.pooling)),
+                use_bi=bool(int(args.use_bi)),
+                use_gru=bool(int(args.use_gru)),
+            ),
             SequentialTaskHead(
                 num_stance_labels,
                 BERT_hidden_state_size,

@@ -52,7 +52,8 @@ class SequentialTaskHead(nn.Module):
         if pool_bert_output and not is_first_head: multiplier_for_classifier += 1
 
         print(f"Initializing classifier for {task_name} head")
-        self.classifier = nn.Linear(hidden_size * multiplier_for_classifier, num_labels)
+        self.hidden = nn.Linear(hidden_size * multiplier_for_classifier, hidden_size)
+        self.classifier = nn.Linear(hidden_size, num_labels)
 
         print()
 
@@ -60,7 +61,7 @@ class SequentialTaskHead(nn.Module):
         if not self.pool_bert_output:
             inputs, _ = self.sequential_model(inputs)
         
-        logits = F.dropout(inputs if self.pool_bert_output else inputs[:, -1, :], p=0.1, training=self.training)
+        logits = self.hidden(F.dropout(inputs if self.pool_bert_output else inputs[:, -1, :], p=0.1, training=self.training))
         res = self.classifier(logits)
         
         return logits if self.pool_bert_output else inputs, res
