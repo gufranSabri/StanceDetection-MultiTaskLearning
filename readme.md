@@ -47,7 +47,8 @@ Example usage:
 1. Create a `models` folder in the root directory
 a. The folder structure should be: ```MawqifStanceDetection (root folder) -> src (folder), data (folder), models (folder), readme.md (file)```
 
-2. Download our <a href='https://www.kaggle.com/datasets/gufransabri3/stanceeval-bestmodel'>best model </a> and place in the models folder
+2. Download our <a href='https://www.kaggle.com/datasets/gufransabri3/stanceeval-bestmodel'>best model</a> and place in the models folder
+a. <span style="color:red">Make sure you do not change the model name!!</span>
 
 3. Run ```python3 src/test.py -model_path <model_path> -data_path <data_path> -save_pred <True|False>```
 a. If `save_pred` is True, the results will be stored in the res folder which is automatically created.
