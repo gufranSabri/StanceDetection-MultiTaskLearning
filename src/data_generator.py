@@ -14,12 +14,13 @@ def data_generator(encoded_tweets, confidences, labels):
             model_specific_tweets.append(encoded_tweets[i][j])            
         tweets.append(model_specific_tweets)
         
-    for i in range(len(labels)):
-        sentiments.append(labels.sentiment.iloc[i])
-        sarcasms.append(labels.sarcasm.iloc[i])
-        stances.append(labels.stance.iloc[i])
-        sarcasm_confidence.append(confidences["sarcasm:confidence"].iloc[i])
-        sentiment_confidence.append(confidences["sentiment:confidence"].iloc[i])
-        stance_confidence.append(confidences["stance:confidence"].iloc[i])
+    if labels is not None:
+        for i in range(len(labels)):
+            sentiments.append(labels.sentiment.iloc[i])
+            sarcasms.append(labels.sarcasm.iloc[i])
+            stances.append(labels.stance.iloc[i])
+            sarcasm_confidence.append(confidences["sarcasm:confidence"].iloc[i])
+            sentiment_confidence.append(confidences["sentiment:confidence"].iloc[i])
+            stance_confidence.append(confidences["stance:confidence"].iloc[i])
             
     return tweets, sentiments, sarcasms, stances, sentiment_confidence, sarcasm_confidence, stance_confidence

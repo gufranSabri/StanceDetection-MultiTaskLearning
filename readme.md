@@ -6,6 +6,14 @@ The goal of this shared task is to propose models for detecting writers' stances
 
 ## Usage Instructions
 
+* For training and testing, first clone this repository and enter into the root directory of the repository.
+
+* Please note that the training and testing data is included in the repository in the `./data` folder.
+
+<p style="color:red">Please note that the code is compatible with Linux and MacOS and has not been tested on a Windows system. If you are using Windows, you might run into issues with the model/data paths in the code.</p>
+
+### Training
+
 This `main.py` script provides a command-line interface with the following arguments:
 
 - `-model`: Choose between 'parallel' or 'sequential' for the model type. Default is 'parallel'.
@@ -28,8 +36,19 @@ This `main.py` script provides a command-line interface with the following argum
 - `-bi`: Set to 0 or 1 to enable or disable bidirectional processing. Default is 0 (disabled).
 - `-gru`: Set to 0 or 1 to enable or disable GRU usage. 1 implies that GRU wlll be used instead of LSTM. Default is 0 (disabled).
 - `-dlc`: Drop low confidence rows for sarcasm and sentiment from training data. Default is 0, ie, they will not be dropped.
-- `-device`: Choose between 'cuda' or 'mps' for the computing device. Default is 'cuda'.
+- `-device`: Choose between 'cuda', 'mps' or 'cpu' for the computing device. Default is 'cuda'.
 
 Example usage:
 
 ``` python src/main.py -model sequential -first sentiment -es 2 -ws 4 -bert 0123 -pool 1 -bi 1 -gru 0 -device cuda ```
+
+### Testing
+
+1. Create a `models` folder in the root directory
+a. The folder structure should be: ```MawqifStanceDetection (root folder) -> src (folder), data (folder), models (folder), readme.md (file)```
+
+2. Download our <a href='https://www.kaggle.com/datasets/gufransabri3/stanceeval-bestmodel'>best model </a> and place in the models folder
+
+3. Run ```python3 src/test.py -model_path <model_path> -data_path <data_path> -save_pred <True|False>```
+a. If `save_pred` is True, the results will be stored in the res folder which is automatically created.
+

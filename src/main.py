@@ -33,29 +33,6 @@ def get_bert_models(indices):
     ]
     return [bert_models[i] for i in indices]
 
-def encode_text(text, tokenizer):
-    return tokenizer(text, padding="max_length", truncation=True, max_length=128, return_tensors="pt")
-
-def remove_hash_URL_MEN(text):
-    text = re.sub(r'#',' ',text)
-    text = re.sub(r'_',' ',text)
-    text = re.sub(r'URL','',text)
-    text = re.sub(r'MENTION','',text)
-    return text
-
-def normalize_arabic(text):
-    text = re.sub("[إآ]", "ا", text)
-    text = re.sub("گ", "ك", text)
-    return text
-
-def process_tweet(tweet):     
-    tweet=remove_hash_URL_MEN(tweet)
-    tweet = re.sub('@[^\s]+', ' ', str(tweet))
-    tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))',' ',str(tweet))    
-    tweet= normalize_arabic(str(tweet))
-    
-    return tweet
-
 def main(args):
     seed = 42
 
@@ -108,7 +85,6 @@ def main(args):
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.15, random_state=42)
     
-
     if bool(int(args.drop_low_confidence)):
         print("DROPPING LOW CONFIDENCE SAMPLES")
         X_train = X_train[(X_train["sarcasm:confidence"] > 0.5) & (X_train["sentiment:confidence"] > 0.5)]
