@@ -51,7 +51,7 @@ class SequentialTaskHead(nn.Module):
         if not pool_bert_output and use_bi: multiplier_for_classifier += 1
         if pool_bert_output and not is_first_head: multiplier_for_classifier += 1
 
-        print(f"Initializing classifier for {task_name} head")
+        print(f"Initializing classifier for {task_name} head, is_first_head = {is_first_head}")
         self.hidden = nn.Linear(hidden_size * multiplier_for_classifier, hidden_size)
         self.classifier = nn.Linear(hidden_size, num_labels)
 

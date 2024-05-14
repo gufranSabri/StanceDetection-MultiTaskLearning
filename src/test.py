@@ -119,35 +119,35 @@ def main(args):
                 num_sentiment_labels,
                 BERT_hidden_state_size,
                 task_name="sentiment",
-                is_first_head = args.first_task == "sentiment",
-                pool_bert_output=bool(int(args.pooling)),
-                use_bi=bool(int(args.use_bi)),
-                use_gru=bool(int(args.use_gru)),
+                is_first_head = "sentiment" in args.model_path,
+                pool_bert_output=bool(int(pooling)),
+                use_bi=bool(int(use_bi)),
+                use_gru=bool(int(use_gru)),
             ),
             SequentialTaskHead(
                 num_sarcasm_labels, 
                 BERT_hidden_state_size,
                 task_name="sarcasm",
-                is_first_head = args.first_task == "sarcasm",
-                pool_bert_output=bool(int(args.pooling)),
-                use_bi=bool(int(args.use_bi)),
-                use_gru=bool(int(args.use_gru)),
+                is_first_head = "sarcasm" in args.model_path,
+                pool_bert_output=bool(int(pooling)),
+                use_bi=bool(int(use_bi)),
+                use_gru=bool(int(use_gru)),
             ),
             SequentialTaskHead(
                 num_stance_labels,
                 BERT_hidden_state_size,
                 task_name="stance",
-                pool_bert_output=bool(int(args.pooling)),
-                use_bi=bool(int(args.use_bi)),
-                use_gru=bool(int(args.use_gru)),
+                pool_bert_output=bool(int(pooling)),
+                use_bi=bool(int(use_bi)),
+                use_gru=bool(int(use_gru)),
             ),
             task_head_layer_size,
-            combination_method=int(args.ensemble_setting),
-            weighting_method=int(args.weighting_setting),
-            pool_bert_output=bool(int(args.pooling)),
-            first_task=args.first_task,
-            device=args.device
-        ).to(args.device)
+            combination_method=int(ensemble_setting),
+            weighting_method=int(weighting_setting),
+            pool_bert_output=bool(int(pooling)),
+            first_task="sentiment" if "sentiment "in args.model_path else "sarcasm",
+            device=device
+        ).to(device)
 
     weights = torch.load(args.model_path, map_location=torch.device(device))
     model.load_state_dict(weights)
@@ -249,15 +249,23 @@ def main(args):
             os.makedirs("./res")
 
         preds_stance = [reverse_mapping_stance[pred] for pred in preds_stance]
-        df["stance"] = preds_stance
-        pred_file_name = args.data_path.split("/")[-1].replace(".csv", "_pred.csv")
+        df["pred"] = preds_stance
+
+        model_name = args.model_path.split("/")[-1].replace(".pt", "")
+        pred_file_name = args.data_path.split("/")[-1].replace(".csv", f"_pred_{model_name}.csv")
         pred_file_path = os.path.join("./res", pred_file_name).replace(" ","_")
         df.to_csv(pred_file_path, index=False)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-model_path", dest="model_path", required=True)
+    # parser.add_argument("-model_path", dest="model_path", required=True)
     parser.add_argument("-data_path", dest="data_path", required=True)
     parser.add_argument("-save_pred", dest="save_pred", default=False, type=bool)
     args = parser.parse_args()
-    main(args)
+
+    models = os.listdir("./models")
+
+    for model in models:
+        if ".pt" not in model: continue
+        args.model_path = f"./models/{model}"
+        main(args)
