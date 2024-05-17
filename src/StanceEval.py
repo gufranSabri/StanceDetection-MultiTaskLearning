@@ -45,7 +45,7 @@ if len(guess_lines) != len(gold_lines):
     sys.exit(1)
 
 targets = ["Women empowerment", "Covid Vaccine", "Digital Transformation"]
-cats = ["FAVOR", "AGAINST", "NONE"] 
+cats = ["Favor", "Against", "None"] 
 
 # Initialize dictionaries to store statistics for each target
 num_of_true_pos_of_each_target = {target: {cat: 0 for cat in cats} for target in targets}
@@ -125,7 +125,7 @@ for target in targets:
         recall_by_target[target][cat] = r
         f_by_target[target][cat] = f
 
-        if cat in ["FAVOR", "AGAINST"]:
+        if cat in ["Favor", "Against"]:
             n_cat += 1
             macro_f += f
 
@@ -135,7 +135,7 @@ for target in targets:
     # Print results for each target
     print(f"\n\n============\nResults for Target: {target}\n============")
     for cat in cats:
-        if cat in ["FAVOR", "AGAINST"]:
+        if cat in ["Favor", "Against"]:
             print(f"{cat:<9} precision: {prec_by_target[target][cat]:.4f} recall: {recall_by_target[target][cat]:.4f} f-score: {f_by_target[target][cat]:.4f}")
     print("------------")
     print(f"Macro F: {macro_f:.4f}\n\n")

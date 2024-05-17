@@ -145,7 +145,7 @@ def main(args):
             combination_method=int(ensemble_setting),
             weighting_method=int(weighting_setting),
             pool_bert_output=bool(int(pooling)),
-            first_task="sentiment" if "sentiment "in args.model_path else "sarcasm",
+            first_task="sentiment" if "sentiment" in args.model_path else "sarcasm",
             device=device
         ).to(device)
 
@@ -266,6 +266,11 @@ if __name__ == "__main__":
     models = os.listdir("./models")
 
     for model in models:
+        # try:
         if ".pt" not in model: continue
         args.model_path = f"./models/{model}"
         main(args)
+        # except:
+        #     print(f"Error in {model}")
+        #     print("--------------------------------------------------")
+        #     continue

@@ -4,6 +4,10 @@
 
 The goal of this shared task is to propose models for detecting writers' stances (Favor, Against, or None) towards three selected topics (COVID-19 vaccine, digital transformation, and women empowerment). Participants can approach the stance detection task through single-task or multi-task learning (MTL). Single-task learning-based models depend only on the stance data for model development and training. MTL-based models can use other information, such as the sentiment and sarcasm of each tweet, to boost the performance of the stance detection system. 
 
+## Approach
+![Approach](./fig/methodology.png)
+<br>
+
 ## Usage Instructions
 
 * For training and testing, first clone this repository and enter into the root directory of the repository.
