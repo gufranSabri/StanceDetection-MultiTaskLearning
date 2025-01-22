@@ -166,7 +166,6 @@ class SequentialMultiTaskModel(nn.Module):
             self.meta_weight_layer = nn.Linear(self.subtask_hidden_layer_size, 3)
             self.loss_weight = [1,1,1]
 
-    
     def get_hidden_in(self):
         if len(self.bert_models) == 1:
             return self.bert_models[0].config.hidden_size
@@ -336,7 +335,6 @@ class ParrallelMultiTaskModel(nn.Module):
             self.meta_weight_layer = nn.Linear(self.subtask_hidden_layer_size, 3)
             self.loss_weight = [1,1,1]
 
-    
     def get_hidden_in(self):
         if len(self.bert_models) == 1:
             return self.bert_models[0].config.hidden_size

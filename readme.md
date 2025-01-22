@@ -1,3 +1,5 @@
+READ PAPER <a href='https://aclanthology.org/2024.arabicnlp-1.94/'>[HERE]</a>
+
 # Multi-Task Learning for Stance Detection (StanceEval2024)
 
 <a href='https://sites.google.com/view/stanceeval/home?authuser=0'>Stance Detection in Arabic Language Shared Task - Part of the The Second Arabic Natural Language Processing Conference (ArabicNLP 2024) Co-located with ACL 2024</a>
